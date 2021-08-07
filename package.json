@@ -1,0 +1,17 @@
+{
+  "name": "wordpress-theme-to-mediawiki-skin",
+  "version": "1.0.0",
+  "description": "According to https://developer.wordpress.org/themes/getting-started/wordpress-licensing-the-gpl/ all Wordpress themes are GPL compliant.",
+  "main": "init.js",
+  "dependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
+    "mw-skin-builder": "file:../skins.wmflabs.org/src/starter-template"
+  },
+  "scripts": {
+    "start": "babel-node init.mjs --experimental-json-modules"
+  },
+  "author": "",
+  "license": "GPL-2.0-or-later"
+}
