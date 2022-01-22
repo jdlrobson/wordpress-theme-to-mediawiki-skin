@@ -73,7 +73,7 @@ function get_post_format() {
 
 class Tag {
     public $name = '<!-- TODO: tag name using domino inject template syntax around me-->';
-    public $slug = 'mw-wordpress-remove-element mw-category';
+    public $slug = 'mw-wordpress-category-cleanup';
     public $termId = 0;
     public $term_id = 0;
 }

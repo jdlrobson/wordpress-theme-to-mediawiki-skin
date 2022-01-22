@@ -1,6 +1,7 @@
 import { exec } from 'child_process';
 import fs from 'fs';
 import { buildSkin } from 'mw-skin-builder';
+import domino from 'domino';
 
 // run nvm use if getting error here
 global.__dirname = import.meta.url.replace( '/index.js', '').replace(
@@ -54,6 +55,53 @@ if ( !fs.existsSync( OUTPUT_DIR ) ) {
     fs.mkdirSync( OUTPUT_DIR );
 }
 
+function mw_the_category() {
+    return `{{#data-portlets}}
+    {{>CategoryPortlet}}
+    {{/data-portlets}}
+`;
+}
+
+function mw_add_category_if_missing( content ) {
+    const locations = [
+        '<!-- dynamic_sidebar:sidebar-1-->',
+        '<!-- placeholder:categories -->',
+    ];
+
+    while (
+        content.indexOf('{{>CategoryPortlet}}') === -1 &&
+        content.indexOf('{{>CategoryPlain}}' ) === -1 &&
+        locations.length > 0
+    ) {
+        const location = locations.pop();
+        content = content.replace( location, mw_the_category() );
+    }
+    return content;
+}
+
+function cleanupTemplateWithDomino(template) {
+    const window = domino.createWindow(template);
+    const doc = window.document;
+
+    // See Neve skin
+    const nodes = doc.querySelectorAll('.mw-wordpress-category-cleanup');
+    nodes.forEach((node, i) => {
+        if ( i === 0 ) {
+            node.parentNode.insertBefore(
+                doc.createTextNode( '{{>CategoryPlain}}' ),
+                node
+            );
+        }
+        node.parentNode.removeChild(node);
+    });
+
+    return mw_add_category_if_missing(
+        doc.body.innerHTML.replace(
+            /\{\{&gt;/g, '{{>'
+        )
+    );
+}
+
 dir.forEach((file) => {
     if ( file.isDirectory() ) {
         const skinName = file.name;
@@ -83,9 +131,12 @@ dir.forEach((file) => {
             messagesEnglish[`${skinKey}-skin-desc`] = `A port of the Wordpress ${skinName} theme (version ${meta.version}).
 Built via [https://skins.wmflabs.org skins.wmflabs.org].
 Last updated on ${new Date().toDateString()}.`;
+            const mustache = cleanupTemplateWithDomino(
+                fs.readFileSync(MUSTACHE_PATH).toString()
+            );
             buildSkin(
                 skinNameCamelCase,
-                fs.readFileSync(MUSTACHE_PATH).toString(),
+                mustache,
                 fs.readFileSync(LESS_PATH).toString(),
                 fs.readFileSync(JS_PATH).toString(),
                 '',
@@ -104,6 +155,7 @@ Last updated on ${new Date().toDateString()}.`;
                         "content-links": true,
                         "content-media": true,
                         'content-tables': true,
+                        'interface-category': mustache.indexOf( '{{>CategoryPortlet}}') > -1 ? true : undefined,
                         'interface-message-box': true,
                         'toc': true
                     }
@@ -125,5 +177,6 @@ Last updated on ${new Date().toDateString()}.`;
                 });
             });
         });
+        exec( `open http://localhost:8888/w/index.php/Selenium_category_test?useskin=${skinName}`)
     }
 });
