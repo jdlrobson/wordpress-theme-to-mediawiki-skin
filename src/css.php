@@ -208,9 +208,17 @@ h2#mw-toc-heading {
     display: none;
 }
 /* No way to render last modified without copyright license */
+.wp-copyright-only.footer-info-lastmod,
+.wp-lastmod-only.footer-info-copyright,
 .wp-skin-the-date .footer-info-copyright {
     display: none;
 }
+
+/* disabled content-links because a.new is not scoped */
+.mw-parser-output a.new {
+    text-decoration: line-through wavy;
+}
+
 EOT;
     return $skin_css . $css .
         // inline styles come last as must override everything else

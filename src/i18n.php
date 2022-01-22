@@ -46,5 +46,5 @@ function esc_attr_x( $str ) {
 }
 
 function date_i18n() {
-    return 'todo last modified date';
+    return get_the_date();
 }

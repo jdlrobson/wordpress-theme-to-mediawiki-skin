@@ -9,7 +9,7 @@ function has_excerpt( $post = 0 ) {
 }
 
 function edit_post_link() {
-    echo '<--todo: edit post link-->';
+    echo '{{>EditBar}}';
 }
 
 function post_class( $class = 'post-19 post type-post status-publish format-standard hentry entry' ) {
@@ -101,7 +101,7 @@ function get_the_tag_list() {
 }
 
 function get_the_date() {
-    return 'thedate';
+    return '<!-- placeholder:thedate -->';
 }
 
 function the_author_posts_link() {
@@ -168,11 +168,14 @@ function get_the_time() {
 }
 
 function get_author_posts_url() {
-    return '#lastmodified';
+    return '{{lastmodified-get_author_posts_url}}';
 }
 
 function get_the_author() {
-    return 'Multiple editors';
+    global $THEME_NAME;
+    $key = $THEME_NAME . '-authors';
+    __mediawiki_add_i18n_message( $key, 'Multiple authors' );
+    return '{{msg-' . $key . '}}';
 }
 
 function get_avatar_url() {
@@ -182,7 +185,7 @@ function get_avatar_url() {
 function get_the_author_meta( $field = '', $user_id = false ) {
     switch ( $field ) {
         case 'display_name':
-            return 'view history';
+            return get_the_author();
         default:
          return '<!-- TODO: get_the_author_meta -->';
     }
@@ -230,7 +233,7 @@ function the_post_navigation( $args = array() ) {
 }
 
 function get_the_post_navigation() {
-    return '{{>EditBar}}';
+    return '<!-- placeholder:get_the_post_navigation -->';
     //<nav class="navigation"><div class="nav-links"><small>' . mw_footer_license() . '</small></div>';
 }
 
@@ -297,7 +300,7 @@ function the_postxxx() {
 }
 
 function get_the_modified_date() {
-    return 'get_the_modified_date';
+    return '';
 }
 
 function get_post_type() {
@@ -332,7 +335,7 @@ function is_paged() {
 }
 
 function get_permalink() {
-    return '#oldid=';
+    return '#placeholder:pageinfo';
 }
 
 function the_permalink() {

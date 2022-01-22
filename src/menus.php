@@ -106,7 +106,7 @@ function echocategorywidget() {
 function echowidget($section) {
     echo '{{#'. $section . '}}';
     echo <<<EOT
-    <section class="widget widget_{{id}}" id="{{id}}" class="{{class}}">
+    <section class="widget widget_{{id}} {{class}}" id="{{id}}">
     <h2 class="widget-title">{{label}}</h2>
     <ul>{{{html-items}}}</ul>
     {{{html-after-portal}}}
@@ -126,6 +126,7 @@ function dynamic_sidebar( $idOrName = 1 ) {
         case 'sidebar-2':
             echowidget('data-portlets.data-languages');
             break;
+        case 'blog-sidebar':
         default:
             echo '<!-- TODO dynamic_sidebar: ' . $idOrName . '-->';
             break;
@@ -143,24 +144,26 @@ function get_menu_for_mediawiki( $key ) {
     $menu = '';
     switch ( $key ) {
         case 'mobile':
+        case 'mobile_menu':
         case 'expanded':
             $menu = '{{#data-portlets-sidebar}}';
             $menu .= '{{#data-portlets-first}}{{{html-items}}}{{/data-portlets-first}}';
             $menu .= '{{#array-portlets-rest}}{{{html-items}}}{{/array-portlets-rest}}';
             $menu .= '{{/data-portlets-sidebar}}';
             break;
+        case 'footer_menu':
         case 'footer':
             $menu .= '{{#data-footer.data-places.array-items}}'. FOOTER_LIST_ITEM . '{{/data-footer.data-places.array-items}}';
             $menu .= '{{#data-footer.data-icons.array-items}}'. FOOTER_LIST_ITEM . '{{/data-footer.data-icons.array-items}}';
             break;
-        case 'top-menu':
-            $menu = mw_get_footer_places();
-            //$menu = '<li><a href="{{link-mainpage}}">{{msg-mainpage-description}}</a></li>';
-            break;
         case 'menu-1':
+        case 'main_menu':
         case 'primary':
             $menu = '{{#data-portlets-sidebar.data-portlets-first}}{{{html-items}}}{{/data-portlets-sidebar.data-portlets-first}}';
             break;
+        case 'top-menu':
+        case 'social-menu':
+        case 'top-bar-nav':
         default:
             $menu = '<!-- TODO:get_menu_for_mediawiki: ' .  $key . '-->';
             break;

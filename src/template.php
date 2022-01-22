@@ -68,15 +68,6 @@ function mw_make_template( $theme_path ) {
     } elseif ( strpos( $content, '#data-footer.data-info.array-items') === false) {
 
     }
-    $licenseAndIcons = $license . $icons;
-
-    if ( strpos( $content, 'data-footer.data-info.array-items' ) === false ) {
-        $content = str_replace(
-            'All Rights Reserved',
-            $licenseAndIcons . ' All Rights Reserved',
-            $content
-        );
-    }
     
     if ( strpos( $content, 'dashicons' ) !== false ) {
         $content .= '<link rel="stylesheet"' .
