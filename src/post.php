@@ -142,7 +142,7 @@ function comments_template() {
 }
 
 function the_tags( $label ) {
-    echoNewLine($label . the_category() );
+    echoNewLine($label . mw_the_category_plain() );
 }
 
 function the_content() {
@@ -373,6 +373,12 @@ function pings_open() {
     return false;
 }
 
+function mw_the_category_plain() {
+    global $THEME_NAME;
+    __mediawiki_add_i18n_message( $THEME_NAME . '-no-categories', 'Uncategorized' );
+    return '{{>CategoryPlain}}';
+}
+
 function the_category() {
-    echo mw_the_category();
+    echo mw_the_category_plain();
 }

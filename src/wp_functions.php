@@ -57,15 +57,17 @@ function wp_footer() {}
 
 function mw_the_category() {
     global $THEME_NAME;
-    __mediawiki_add_i18n_message( $THEME_NAME . '-no-categories', 'No categories' );
+    __mediawiki_add_i18n_message( $THEME_NAME . '-no-categories', 'Uncategorized' );
     return '{{#data-portlets}}' .
     '{{>CategoryPortlet}}' .
     '{{/data-portlets}}';
 }
 
+const PLACEHOLDER_CATEGORIES = '<!-- placeholder:categories -->';
+
 // The formatted output of a list of pages.
 function wp_link_pages( $args = '' ) {
-    echo 'TODO: wp_link_pages';
+    echo PLACEHOLDER_CATEGORIES;
 }
 
 function wp_login_url( $redirect = '', $force_reauth = false ) {

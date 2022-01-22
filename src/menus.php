@@ -106,7 +106,7 @@ function echocategorywidget() {
 function echowidget($section) {
     echo '{{#'. $section . '}}';
     echo <<<EOT
-    <section class="widget widget_{{id}}">
+    <section class="widget widget_{{id}}" id="{{id}}" class="{{class}}">
     <h2 class="widget-title">{{label}}</h2>
     <ul>{{{html-items}}}</ul>
     {{{html-after-portal}}}
@@ -114,6 +114,7 @@ function echowidget($section) {
     EOT;
     echo '{{/'. $section . '}}';
 }
+
 
 function dynamic_sidebar( $idOrName = 1 ) {
     // loads a sidebar registered via register_sidebar
@@ -123,8 +124,7 @@ function dynamic_sidebar( $idOrName = 1 ) {
             echowidget('data-portlets-sidebar.array-portlets-rest');
             break;
         case 'sidebar-2':
-            last_modified();
-            echocategorywidget();
+            echowidget('data-portlets.data-languages');
             break;
         default:
             echo '<!-- TODO dynamic_sidebar: ' . $idOrName . '-->';

@@ -84,10 +84,24 @@ function mw_make_template( $theme_path ) {
     }
 
     //$content = preg_replace( "/\>&copy;/", ">{{>CompactFooter}} &copy;", $content );
+    $content = mw_add_category_if_missing( $content );
 
-    if ( substr_count( $content, '{{>CategoryPortlet}}' ) === 0 ) {
-        $content = str_replace( '<!-- dynamic_sidebar:sidebar-1-->',
-            mw_categorywidget(), $content );
-    }
     return $adminBar . $content;
+}
+
+function mw_add_category_if_missing( $content ) {
+    $locations = [
+        '<!-- dynamic_sidebar:sidebar-1-->',
+        PLACEHOLDER_CATEGORIES,
+    ];
+
+    while (
+        substr_count( $content, '{{>CategoryPortlet}}' ) === 0 &&
+        substr_count( $content, '{{>CategoryPlain}}' ) === 0 &&
+        count( $locations ) > 0
+    ) {
+        $location = array_pop( $locations );
+        $content = str_replace( $location, mw_the_category(), $content );
+    }
+    return $content;
 }
