@@ -96,20 +96,23 @@ function getCopyrightOrLastModified( text, showCopyright = true ) {
     {{/data-footer.data-info.array-items}}`
 }
 
-function getDeepestChildInternal( node, depth = 0 ) {
+function getDeepestChildInternal( node, tag, depth = 0 ) {
     const childNodes = Array.from(node.childNodes)
-        .filter((child) => child.nodeType !== 3 );
+        .filter((child) => child.nodeType !== 3 && child.nodeType !== 8 &&
+            child.tagName === tag
+        );
+
     if ( childNodes.length === 0 ) {
         return { child: node, depth };
     }
     const nodes = childNodes
         .map((child) => {
-            return getDeepestChildInternal(child, depth + 1);
+            return getDeepestChildInternal(child, tag, depth + 1);
         }).sort((n, n2) => n.depth > n2.depth ? -1 : 1 )
     return nodes[0];
 }
-function getDeepestChild(node ) {
-    const r = getDeepestChildInternal( node, 0 );
+function getDeepestChild(node, tag ) {
+    const r = getDeepestChildInternal( node, tag, 0 );
     return r.child;
 }
 
@@ -124,7 +127,7 @@ function addCopyright(doc, template) {
             const footer = doc.querySelector('footer');
             if ( footer ) {
                 const slot = footer.querySelector( '.site-container, .container') ||
-                    getDeepestChild(footer);
+                    getDeepestChild(footer, 'DIV');
                 if ( slot ) {
                     slot.innerHTML = '';
                     slot.appendChild(
@@ -242,6 +245,7 @@ dir.forEach((file) => {
             const meta = JSON.parse(
                 fs.readFileSync(META_PATH).toString()
             );
+            console.log(`Finalizing ${skinName}`)
             const mustache = cleanupTemplateWithDomino(
                 fs.readFileSync(MUSTACHE_PATH).toString()
             );
