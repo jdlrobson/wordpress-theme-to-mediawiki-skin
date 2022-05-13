@@ -54,24 +54,6 @@ function get_template_directory() {
     return dirname(__FILE__) . '/' . THEME_PATH . $THEME_NAME . '/';
 }
 
-// https://developer.wordpress.org/reference/functions/get_template_part/
-function get_template_part( string $part, string $name = null, array $args = array() ) {
-    global $THEME_NAME;
-    $root = dirname(__FILE__) . '/' . THEME_PATH . $THEME_NAME . '/';
-    $path1 = $root . $part . '.php';
-    if ( $name ) {
-        $path2 = $root . $part . '-' . $name . '.php';
-        $path3 = $root . $part . '.php';
-        if ( file_exists( $path2 ) ) {
-            require_once( $path2 );
-        } elseif ( file_exists( $path3 ) ) {
-            require_once( $path3 );
-        }
-    } else {
-        require_once( $path1 );
-    }
-}
-
 function get_header() {
     global $THEME_NAME;
     return require_once(THEME_PATH . $THEME_NAME . "/header.php");
