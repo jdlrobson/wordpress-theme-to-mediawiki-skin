@@ -145,13 +145,17 @@ function the_tags( $label ) {
     echoNewLine($label . mw_the_category_plain() );
 }
 
+function mw_the_content() {
+    return '<div id="siteNotice">{{{html-site-notice}}}</div>' .
+    '<div id="content" class="alignwide">{{{html-body-content}}}</div>' .
+     '<div class="alignwide">{{{html-after-content}}}</div>';
+}
+
 function the_content() {
     // Alignwide for skins like `twentytwentyone`...?
     // Or not.. HelloElementor.
     echoNewLine(
-        '<div id="content" class="_alignwide">{{{html-body-content}}}</div>' .
-        '<div id="siteNotice">{{{html-site-notice}}}</div>' .
-        '<div class="_alignwide">{{{html-after-content}}}</div>'
+        mw_the_content()
     );
 }
 
