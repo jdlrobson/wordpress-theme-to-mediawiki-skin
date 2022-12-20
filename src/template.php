@@ -8,34 +8,7 @@ function load_template( $_template_file, $require_once = true, $args = array() )
     }
 }
 
-// https://developer.wordpress.org/reference/functions/get_template_part/
-function get_template_part( string $part, string $name = null, array $args = array() ) {
-    global $THEME_NAME;
-    $root = dirname(__FILE__) . '/' . THEME_PATH . $THEME_NAME . '/';
-    $path1 = $root . $part . '.php';
-    if ( $name ) {
-        $path2 = $root . $part . '-' . $name . '.php';
-        $path3 = $root . $part . '.php';
-        if ( file_exists( $path2 ) ) {
-            require_once( $path2 );
-        } elseif ( file_exists( $path3 ) ) {
-            require_once( $path3 );
-        }
-    } else {
-        if ( file_exists( $path1 ) ) {
-          require_once( $path1 );
-        }
-    }
-}
-
-require_once( 'themeBlock.php' );
 function mw_make_template( $theme_path ) {
-    $htmlthemeentrypoint = $theme_path . "/templates/page.html";
-    $res = make_wp_block_template( $theme_path );
-    if ( $res !== false ) {
-        return $res;
-    }
-    // make the legacy template
     $wpindexentrypoint = $theme_path . "/index.php";
     $wppageentrypoint = $theme_path . "/single.php";
 
@@ -68,10 +41,7 @@ function mw_make_template( $theme_path ) {
             $content
         );
     }*/
-    return mw_finalize_the_template( $content );
-}
 
-function mw_finalize_the_template( $content ) {
     // Make sure an edit link is available.
     if ( strpos( $content, '{{>EditBar}}') === false ) {
         $adminBar = '{{>AdminBarWithEdit}}';
