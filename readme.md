@@ -27,7 +27,7 @@ npm start
 Wordpress skins will be processed for assets that will be collected in the temporary
 `output` folder (will eventually be hidden but useful for debugging).
 
-This output folder is then put through the npm module `mediawiki-boilerplate` to generate skin folders inside the `WPMediaWikiSkins` folder.
+This output folder is then put through the npm module `mediawiki-skins-cli` to generate skin folders inside the `WPMediaWikiSkins` folder.
 
 TODO: 
 

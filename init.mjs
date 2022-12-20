@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import fs from 'fs';
-import { buildSkin } from 'mw-skin-builder';
+import { buildSkin } from 'mediawiki-skins-cli';
 import domino from 'domino';
 
 // run nvm use if getting error here
