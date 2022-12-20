@@ -265,6 +265,7 @@ ${unminifySource( fs.readFileSync(JS_PATH).toString() )}`,
                     skinOptions: Object.assign( meta, {
                         toc: false
                     } ),
+                    authors: meta.authors,
                     license: 'GPL-2.0-or-later',
                     messages: {
                         en: Object.assign( messagesEnglish, {

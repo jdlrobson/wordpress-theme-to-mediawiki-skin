@@ -21,6 +21,27 @@ const ABSPATH = '';
 
 $PATH = dirname(__FILE__);
 
+function getreadme( $p ) {
+    foreach( [ 'readme.md', 'readme.txt' ] as $file ) {
+        $readmePath = $p . '/' . get_parent_theme_file_path( '/' . $file );
+        if ( file_exists( $readmePath ) ) {
+            return file_get_contents( $readmePath );
+        }
+    }
+    return '';
+}
+
+$readme = getreadme( $PATH );
+$matches = [];
+$themeAuthors = [
+    '[https://skins.wmflabs.org skins.wmflabs.org v.2.0]',
+    '[https://github.com/jdlrobson/wordpress-theme-to-mediawiki-skin wordpress theme to mediawiki skin]'
+];
+preg_match( '/Contributors: (.*)/', $readme, $matches );
+if ( $matches[1] ) {
+    $themeAuthors = array_merge( explode(',', trim( $matches[1] ) ), $themeAuthors );
+}
+
 require_once('src/index.php');
 
 function get_sidebar( $name = null, $args = [] ) {
@@ -120,6 +141,7 @@ $wp_enqueue_scripts = do_action( 'wp_enqueue_scripts', [] );
 
 $bodyClass = apply_filters('body_class', [], '');
 file_put_contents( $outdir . '/meta.json', json_encode( [
+    'authors' => $themeAuthors,
     'bodyClasses' => array_unique( $bodyClass ),
     'version' => mw_get_version_from_readme(),
 ] ) );
