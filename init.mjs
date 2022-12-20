@@ -255,7 +255,7 @@ dir.forEach((file) => {
                 mustache,
                 fs.readFileSync(LESS_PATH).toString(),
                 `// Disable module exporting in this context
-module = undefined;
+module = undefined; exports = undefined;
 ${unminifySource( fs.readFileSync(JS_PATH).toString() )}`,
                 '',
                 {
