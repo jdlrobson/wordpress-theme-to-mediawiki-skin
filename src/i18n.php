@@ -11,7 +11,7 @@ function __mediawiki_get_i18n_key( $domain, $text ) {
             return $key;
         }
     }
-    $id = (string)count( array_keys( $skin_messages ) );
+    $id = (string)(count( array_keys( $skin_messages ) ) - 1);
     $key = $domain . '-' . $id;
     $skin_messages[ $key ] =  $text;
     return $key;
