@@ -207,12 +207,8 @@ h2#mw-toc-heading {
 .mw-wordpress-wordmark + * {
     display: none;
 }
-/* No way to render last modified without copyright license */
-.wp-copyright-only.footer-info-lastmod,
-.wp-lastmod-only.footer-info-copyright,
-.wp-skin-the-date .footer-info-copyright {
-    display: none;
-}
+/* Reset skins expecting last modified as text only. */
+.skin-last-modified:after { content: none !important; }
 
 /* disabled content-links because a.new is not scoped */
 .mw-parser-output a.new {

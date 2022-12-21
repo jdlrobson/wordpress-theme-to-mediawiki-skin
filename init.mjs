@@ -80,21 +80,17 @@ function mw_add_category_if_missing( content ) {
     return content;
 }
 
-// Doesn't work on Fairy. creates links inside of links
 function add_last_modified( str ) {
     return str.replaceAll(
         '<!-- placeholder:thedate -->',
-        getCopyrightOrLastModified( '', false )
+        '{{>LastModifiedLine}}'
     ).replaceAll(
         '{{lastmodified-get_author_posts_url}}', '?action=history'
     );
 }
 
-function getCopyrightOrLastModified( text, showCopyright = true ) {
-    return `{{#data-footer.data-info.array-items}}
-    <span class="{{id}} ${showCopyright ? 'wp-copyright-only' : 'wp-lastmod-only'}">
-    ${showCopyright ? '{{{html}}}' : '{{html}}'} ${text}</span>
-    {{/data-footer.data-info.array-items}}`
+function getCopyright( text ) {
+    return '<span>{{>CopyrightLine}}' + text + '</span>';
 }
 
 function getDeepestChildInternal( node, tag, depth = 0 ) {
@@ -159,7 +155,7 @@ function addCopyright(doc, template) {
                         trimText.indexOf( '©' ) === 0
                     ) {
                         done = true;
-                        childNode.innerHTML = getCopyrightOrLastModified(
+                        childNode.innerHTML = getCopyright(
                             trimText
                         );
                     }
