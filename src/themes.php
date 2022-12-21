@@ -114,6 +114,8 @@ function get_theme_mod( $name, $default = false ) {
     // disable excerpts
     if ( $name === 'ocean_blog_entry_excerpt_length' ) {
         return '500';
+    } elseif ( $name === 'custom_logo' ) {
+        return 'custom_logo';
     }
  
     if ( isset( $mods[ $name ] ) ) {
@@ -219,6 +221,7 @@ function add_theme_support( $feature, ...$args ) {
             }
             break;
  
+        case 'custom_logo':
         case 'custom-logo':
             if ( true === $args ) {
                 $args = array( 0 => array() );

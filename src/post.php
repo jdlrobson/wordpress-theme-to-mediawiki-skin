@@ -159,8 +159,12 @@ function the_content() {
     );
 }
 
-function wp_get_attachment_image() {
-    return '';
+function wp_get_attachment_image( $name ) {
+    $html = '';
+    if ( $name === 'custom_logo' ) {
+        $html = '{{>Logo}}';
+    }
+    return '<!-- wp_get_attachment_image:' . $name . '-->' . $html;
 }
 
 function get_the_modified_time() {
