@@ -8,10 +8,6 @@ function is_tag() {
     return false;
 }
 
-function get_the_permalink() {
-    return '#todo-permalink';
-}
-
 function add_editor_style(){}
 
 function current_theme_supports( $feature, ...$args ) {

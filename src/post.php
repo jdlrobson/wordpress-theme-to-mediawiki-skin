@@ -347,7 +347,11 @@ function is_paged() {
 }
 
 function get_permalink() {
-    return '#placeholder:pageinfo';
+    return '#t-permalink';
+}
+
+function get_the_permalink() {
+    return get_permalink();
 }
 
 function the_permalink() {
