@@ -118,7 +118,7 @@ file_put_contents($outdir . "/skin.mustache", $content );
 
 # do js.
 do_action('wp_enqueue_scripts', []);
-global $skin_assets, $skin_js_inline;
+global $skin_assets;
 
 if ( !file_exists( $outdir ) ) {
     mkdir( dirname( $outdir ), 0777, true );
@@ -145,14 +145,8 @@ file_put_contents( $outdir . '/meta.json', json_encode( [
     'bodyClasses' => array_unique( $bodyClass ),
     'version' => mw_get_version_from_readme(),
 ] ) );
-// TODO: IN Kadence inline JS needs to come first.
-// oceanwp playing up.
-// However in AStra it needs to come last... (flexibility is not defined)
-$js = in_array( $THEME_NAME, [ 'astra', 'oceanwp' ] ) ?
-    $skin_js . $skin_js_inline :
-    $skin_js_inline . $skin_js;
 
-file_put_contents($outdir . "/skin.js", $js );
+file_put_contents($outdir . "/skin.js", mw_get_js() );
 
 global $skin_messages;
 file_put_contents($outdir . '/en.json', json_encode( $skin_messages ) );
