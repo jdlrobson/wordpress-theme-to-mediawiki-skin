@@ -67,6 +67,10 @@ function admin_url() {
     return '';
 }
 
+function get_post_mime_type() {
+    return 'image/jpeg';
+}
+
 function get_post_format() {
     return 'standard';
 }
