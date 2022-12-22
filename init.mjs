@@ -4,6 +4,7 @@ import { buildSkin } from 'mediawiki-skins-cli';
 import domino from 'domino';
 import unminifySource from 'unminify';
 import cssunminifier from 'cssunminifier';
+import packageJSON from './package.json';
 
 // run nvm use if getting error here
 global.__dirname = import.meta.url.replace( '/index.js', '').replace(
@@ -267,7 +268,7 @@ ${unminifySource( fs.readFileSync(JS_PATH).toString() )}`,
                     messages: {
                         en: Object.assign( messagesEnglish, {
                             [`${skinKey}-skin-desc`]: `A port of the Wordpress ${skinName} theme (version ${meta.version}).
-Built via [https://skins.wmflabs.org skins.wmflabs.org].
+Built via [https://github.com/jdlrobson/wordpress-theme-to-mediawiki-skin wordpress-theme-to-mediawiki-skin@${packageJSON.version}].
 Last updated on ${new Date().toDateString()}.`,
                             [`${skinKey}-no-categories`]: 'Uncategorized'
                         } )
