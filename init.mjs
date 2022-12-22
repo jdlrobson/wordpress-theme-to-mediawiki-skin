@@ -3,6 +3,7 @@ import fs from 'fs';
 import { buildSkin } from 'mediawiki-skins-cli';
 import domino from 'domino';
 import unminifySource from 'unminify';
+import cssunminifier from 'cssunminifier';
 
 // run nvm use if getting error here
 global.__dirname = import.meta.url.replace( '/index.js', '').replace(
@@ -249,7 +250,7 @@ dir.forEach((file) => {
             buildSkin(
                 skinNameCamelCase,
                 mustache,
-                fs.readFileSync(LESS_PATH).toString(),
+                cssunminifier.unminify(fs.readFileSync(LESS_PATH).toString(), 2).toString(),
                 `// Disable module exporting in this context
 module = undefined; exports = undefined;
 ${unminifySource( fs.readFileSync(JS_PATH).toString() )}`,
