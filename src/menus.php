@@ -52,7 +52,7 @@ function wp_nav_menu( $args = [] ) {
     
     $menuClass = $args['menu_class'] ?? '';
     // e.g. "<ul id="primary-menu-list" class="%2$s">%3$s</ul>"
-    $ulTemplate = $args['items_wrap'] ?? '<ul class="%2$s">%3$s</ul>';
+    $ulTemplate = $args['items_wrap'] ?? '<ul id="' . $location . '-menu" class="menu %2$s">%3$s</ul>';
 
     $ul = str_replace(
         '%3$s', $menu,
@@ -106,6 +106,7 @@ function echocategorywidget() {
 function echowidget($section) {
     echo '{{#'. $section . '}}';
     echo <<<EOT
+    <!-- echowidget -->
     <section class="widget widget_{{id}} {{class}}" id="{{id}}">
     <h2 class="widget-title">{{label}}</h2>
     <ul>{{{html-items}}}</ul>
