@@ -151,8 +151,8 @@ function the_tags( $label ) {
 
 function mw_the_content() {
     return '<div id="siteNotice">{{{html-site-notice}}}</div>' .
-    '<div id="content" class="alignwide">{{{html-body-content}}}</div>' .
-     '<div class="alignwide">{{{html-after-content}}}</div>';
+    '<div id="content">{{{html-body-content}}}</div>' .
+     '<div>{{{html-after-content}}}</div>';
 }
 
 function the_content() {
