@@ -68,6 +68,13 @@ function mw_make_template( $theme_path ) {
             $content
         );
     }*/
+
+    ob_start();
+    do_action( 'wp_footer' );
+    // Add the footer to the contents if applicable.
+    $content .= ob_get_contents();
+    ob_end_clean();
+
     return mw_finalize_the_template( $content );
 }
 
