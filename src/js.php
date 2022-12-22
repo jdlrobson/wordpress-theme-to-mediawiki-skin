@@ -32,7 +32,7 @@ function mw_wp_get_script( $path ) {
     $read = $skin_js_read_files[$path] ?? false;
     if ( file_exists( $path ) && !$read ) {
         $skin_js_read_files[$path] = true;
-        return do_wp_to_mw_replacement(
+        $js = do_wp_to_mw_replacement(
             [
                 [
                     '/var twentytwenty = twentytwenty \|\| \{\}\;/',
@@ -51,8 +51,13 @@ function mw_wp_get_script( $path ) {
             '(function() {' . file_get_contents( $path ). '}());'
         );
     } else {
-        return '';
+        $js = '';
     }
+    // Temporary fix for lack of permalink support.
+    $js .= '$(function() {'
+        . "$('a[href=\"#t-permalink\"]').each((i, a)=>$(a).prop('href', $('#t-permalink a').attr('href')))"
+        . '}());';
+    return $js;
 }
 
 function wp_register_script( $name, $path, $dependencies ) {
