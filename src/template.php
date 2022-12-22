@@ -29,6 +29,27 @@ function get_template_part( string $part, string $name = null, array $args = arr
 }
 
 require_once( 'themeBlock.php' );
+
+
+function get_html_preferred_entry_point( $theme_path ) {
+    $entrypoints = [
+        $theme_path . "/single.php",
+        $theme_path . "/page.php",
+        $theme_path . "/index.php",
+    ];
+
+    foreach ( $entrypoints as $entrypoint ) {
+        if ( file_exists( $entrypoint ) ) {
+            ob_start();
+            require_once( $entrypoint );
+            $content = ob_get_contents();
+            ob_end_clean();
+            return $content;
+        }
+    }
+    return '';
+}
+
 function mw_make_template( $theme_path ) {
     $htmlthemeentrypoint = $theme_path . "/templates/page.html";
     $res = make_wp_block_template( $theme_path );
@@ -36,19 +57,7 @@ function mw_make_template( $theme_path ) {
         return $res;
     }
     // make the legacy template
-    $wpindexentrypoint = $theme_path . "/index.php";
-    $wppageentrypoint = $theme_path . "/single.php";
-
-    if ( file_exists( $wppageentrypoint ) ) {
-        //require_once( $wpindexentrypoint );
-        ob_start();
-        require_once( $wppageentrypoint );
-    } else {
-        ob_start();
-        require_once( $wpindexentrypoint );
-    }
-    $content = ob_get_contents();
-    ob_end_clean();
+    $content = get_html_preferred_entry_point( $theme_path );
     $content = str_replace( '<body >', '<body>', $content );
     preg_match("/<body.*\/body>/s", $content, $matches);
     
