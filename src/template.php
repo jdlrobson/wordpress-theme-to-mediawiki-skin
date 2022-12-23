@@ -30,16 +30,23 @@ function get_template_part( string $part, string $name = null, array $args = arr
 
 require_once( 'themeBlock.php' );
 
+function get_html_preferred_entry_point_name() {
+    global $mwWPTemplateEntryPoint;
+    return $mwWPTemplateEntryPoint;
+}
 
 function get_html_preferred_entry_point( $theme_path ) {
-    $entrypoints = [
-        $theme_path . "/single.php",
-        $theme_path . "/page.php",
-        $theme_path . "/index.php",
+    global $mwWPTemplateEntryPoint;
+    $names = [
+        'single',
+        'index',
+        'page',
     ];
 
-    foreach ( $entrypoints as $entrypoint ) {
+    foreach ( $names as $name ) {
+        $entrypoint =  $theme_path . "/" . $name . '.php';
         if ( file_exists( $entrypoint ) ) {
+            $mwWPTemplateEntryPoint = $name;
             ob_start();
             require_once( $entrypoint );
             $content = ob_get_contents();

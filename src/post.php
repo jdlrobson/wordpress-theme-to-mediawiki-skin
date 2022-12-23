@@ -117,15 +117,21 @@ function is_single() {
 }
 
 function get_the_title() {
-    return '{{{html-title}}}';
+    $name = get_html_preferred_entry_point_name();
+    switch ( $name ) {
+        case 'index':
+            return '{{{msg-sitetitle}}}';
+        default:
+            return '{{{html-title}}}';
+    }
 }
 
 function single_post_title() {
-    return get_the_title();
+    return '{{{html-title}}}';
 }
 
 function the_title( string $before = '', string $after = '', bool $echo = true ) {
-    $t = $before . get_the_title() . $after;
+    $t = $before . single_post_title() . $after;
     if ( $echo ) {
         echoNewLine($t);
     } else {
