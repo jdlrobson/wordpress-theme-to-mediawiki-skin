@@ -38,8 +38,13 @@ function get_html_preferred_entry_point_name() {
 function get_html_preferred_entry_point( $theme_path ) {
     global $mwWPTemplateEntryPoint;
     $names = [
+        // [astra], [fairy], [kadence], [neve], [popularfx], [2019], [2021]
         'single',
+        // [2020], [oceanwp]
+        'singular',
+        // [hello-elementor], oceanwp
         'index',
+        // oceanwp,
         'page',
     ];
 
@@ -76,6 +81,7 @@ function mw_make_template( $theme_path ) {
     # grab the bit inside body tag
     $content = preg_replace( "/<body[^>]*>/i", "", $content);
     $content = preg_replace( "/<\/body *>/i", "", $content);
+    $content = '<!-- generated-from:' . get_html_preferred_entry_point_name() . '-->' . $content;
 
     /*if ( strpos( $content, 'data-footer.data-places.array-items' ) === false ) {
         $content = preg_replace(
