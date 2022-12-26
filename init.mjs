@@ -248,6 +248,7 @@ dir.forEach((file) => {
             const mustache = cleanupTemplateWithDomino(
                 fs.readFileSync(MUSTACHE_PATH).toString()
             );
+            meta.bodyClasses.push( 'single-post' );
             buildSkin(
                 skinNameCamelCase,
                 mustache,
