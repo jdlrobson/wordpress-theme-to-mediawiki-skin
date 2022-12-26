@@ -11,7 +11,7 @@ class WP_Query {
         return $post;
     }
     public function have_posts() {
-        return true;
+        return false;
     }
     public function set( $name, $value ) {
         $this->values[$name] = $value;
