@@ -22,15 +22,16 @@ const ABSPATH = '';
 $PATH = dirname(__FILE__);
 
 function getreadme( $p ) {
+    $readme = '';
     foreach( [ 'readme.md', 'readme.txt' ] as $file ) {
         $readmePath = $p . '/' . get_parent_theme_file_path( '/' . $file );
+        echo $readmePath;
         if ( file_exists( $readmePath ) ) {
-            return file_get_contents( $readmePath );
+            $readme .= file_get_contents( $readmePath );
         }
     }
-    return '';
+    return $readme;
 }
-
 $readme = getreadme( $PATH );
 $matches = [];
 $themeAuthors = [
@@ -39,7 +40,15 @@ $themeAuthors = [
 ];
 preg_match( '/Contributors: (.*)/', $readme, $matches );
 if ( $matches[1] ) {
-    $themeAuthors = array_merge( explode(',', trim( $matches[1] ) ), $themeAuthors );
+    $themeAuthors = array_merge(
+        array_map(
+            static function ( $a ) {
+                return trim( $a );
+            },
+            explode(',', trim( $matches[1] ) )
+        ),
+        $themeAuthors
+    );
 }
 
 require_once('src/index.php');
