@@ -105,7 +105,7 @@ function get_the_tags() {
 }
 
 function get_the_category_list() {
-    return [];
+    return '{{#data-portlets.data-category-normal.array-items}}{{{html}}} {{/data-portlets.data-category-normal.array-items}}';
 }
 
 function has_tag() {
