@@ -190,7 +190,17 @@ function replacePlaceholderTags( doc ) {
 }
 
 function wrapMetaData( doc ) {
-    doc.querySelectorAll( '.entry-meta' ).forEach(( node ) => {
+    // nv- prefixed are for Neve skin
+    doc.querySelectorAll( [
+        '.entry-meta',
+        '.post-tags',
+        '.nv-tags-list',
+        '.nv-meta-list',
+        '.entry-footer',
+        '.meta',
+        '.cat-links',
+        '.entry-categories'
+    ].join( ',' ) ).forEach(( node ) => {
         const before = doc.createTextNode( '{{^is-specialpage}}' );
         const after = doc.createTextNode( '{{/is-specialpage}}' );
         node.parentNode.insertBefore( before, node );
