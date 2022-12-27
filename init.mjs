@@ -176,7 +176,7 @@ function injectLanguageButton(doc, template) {
     );
     if ( noLanguages && title ) {
         title.parentNode.insertBefore(
-            doc.createTextNode( '{{>LanguageButton}}' ),
+            doc.createTextNode( '{{#is-article}}{{>LanguageButton}}{{/is-article}}' ),
             title.nextSibling
         );
     }
@@ -189,12 +189,22 @@ function replacePlaceholderTags( doc ) {
     })
 }
 
+function wrapMetaData( doc ) {
+    doc.querySelectorAll( '.entry-meta' ).forEach(( node ) => {
+        const before = doc.createTextNode( '{{^is-specialpage}}' );
+        const after = doc.createTextNode( '{{/is-specialpage}}' );
+        node.parentNode.insertBefore( before, node );
+        node.parentNode.insertBefore( after, node.nextSibling );
+    });
+}
+
 function cleanupTemplateWithDomino(template) {
     const window = domino.createWindow(template);
     const doc = window.document;
     injectLanguageButton(doc, template);
     addCopyright(doc, template);
     replacePlaceholderTags(doc);
+    wrapMetaData(doc);
     // See Neve skin
     const nodes = doc.querySelectorAll('.mw-wordpress-category-cleanup');
     nodes.forEach((node, i) => {
