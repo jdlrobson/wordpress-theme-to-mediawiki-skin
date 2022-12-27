@@ -258,6 +258,7 @@ dir.forEach((file) => {
                 fs.readFileSync(MUSTACHE_PATH).toString()
             );
             meta.bodyClasses.push( 'single-post' );
+            meta.bodyClasses.push( 'single' );
             buildSkin(
                 skinNameCamelCase,
                 mustache,
