@@ -110,7 +110,7 @@ function get_the_tags() {
 }
 
 function get_the_category_list() {
-    return '<span class="skin-category-list">{{#data-portlets.data-category-normal.array-items}}{{{html}}} {{/data-portlets.data-category-normal.array-items}}</span>';
+    return '<span class="skin-category-list mw-portlet mw-portlet-category-normal">{{#data-portlets.data-category-normal.array-items}}{{{html}}} {{/data-portlets.data-category-normal.array-items}}</span>';
 }
 
 function get_the_term_list() {
