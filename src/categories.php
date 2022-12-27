@@ -4,5 +4,5 @@ function is_category() {
 }
 
 function has_category() {
-    return false;
+    return true;
 }
