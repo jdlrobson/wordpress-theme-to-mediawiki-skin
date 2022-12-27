@@ -1,7 +1,19 @@
 <?php
 
 function get_the_category() {
-    return [];
+    return [
+        (object) [
+            'term_id'=> ' mw-category-placeholder',
+            'cat_name' => 'placeholder',
+        ],
+    ];
+}
+
+function get_category() {
+    return '';
+}
+function get_category_link() {
+    return '#';
 }
 
 function has_excerpt( $post = 0 ) {

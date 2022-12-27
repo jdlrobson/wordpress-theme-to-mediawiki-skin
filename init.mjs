@@ -72,6 +72,7 @@ function mw_add_category_if_missing( content ) {
     ];
 
     while (
+        content.indexOf('{{#data-portlets.data-category-normal.array-items}}') === -1 &&
         content.indexOf('{{>CategoryPortlet}}') === -1 &&
         content.indexOf('{{>CategoryPlain}}' ) === -1 &&
         locations.length > 0
@@ -179,12 +180,20 @@ function injectLanguageButton(doc, template) {
         );
     }
 }
+function replacePlaceholderTags( doc ) {
+    doc.querySelectorAll( '.mw-category-placeholder' ).forEach((node) => {
+        node.replaceWith(
+            doc.createTextNode( '{{#data-portlets.data-category-normal.array-items}}{{{html}}}{{/data-portlets.data-category-normal.array-items}}')
+        )
+    })
+}
 
 function cleanupTemplateWithDomino(template) {
     const window = domino.createWindow(template);
     const doc = window.document;
     injectLanguageButton(doc, template);
     addCopyright(doc, template);
+    replacePlaceholderTags(doc);
     // See Neve skin
     const nodes = doc.querySelectorAll('.mw-wordpress-category-cleanup');
     nodes.forEach((node, i) => {
