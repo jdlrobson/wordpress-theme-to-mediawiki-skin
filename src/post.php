@@ -53,8 +53,13 @@ function the_excerpt() {
     return '<!--todo excerpt -->';
 }
 
-function has_term() {
-    return false;
+function has_term( $t, $slug ) {
+    switch ( $slug ) {
+        case 'category':
+            return true;
+        default:
+            return false;
+    }
 }
 function get_the_terms() {
     return [];
@@ -105,7 +110,11 @@ function get_the_tags() {
 }
 
 function get_the_category_list() {
-    return '{{#data-portlets.data-category-normal.array-items}}{{{html}}} {{/data-portlets.data-category-normal.array-items}}';
+    return '<span class="skin-category-list">{{#data-portlets.data-category-normal.array-items}}{{{html}}} {{/data-portlets.data-category-normal.array-items}}</span>';
+}
+
+function get_the_term_list() {
+    return get_the_category_list();
 }
 
 function has_tag() {
@@ -429,6 +438,10 @@ function comments_open() {}
 
 function pings_open() {
     return false;
+}
+
+function taxonomy_exists() {
+    return true;
 }
 
 function mw_the_category_plain() {

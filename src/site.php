@@ -5,7 +5,7 @@ function is_search() {
 }
 
 function is_home() {
-    return true; // for now no special homepage treatment.
+    return false;
 }
 
 function is_archive() {
