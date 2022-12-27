@@ -131,7 +131,6 @@ function is_single() {
 function get_the_title() {
     $name = get_html_preferred_entry_point_name();
     switch ( $name ) {
-        case 'single':
         case 'singular':
         case 'index':
             return '{{{msg-sitetitle}}}';
