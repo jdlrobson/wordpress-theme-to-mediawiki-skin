@@ -5,7 +5,7 @@ global $wp_query;
 class WP_Query {
     private $values = [];
     public $max_num_pages = 1;
-    public $post_count = 1;
+    public $post_count = 0;
     public function the_post() {
         global $post;
         return $post;

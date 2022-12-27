@@ -351,11 +351,7 @@ function get_the_modified_date() {
 }
 
 function get_post_type() {
-    global $THEME_NAME;
-    if ( $THEME_NAME === 'kadence' ) {
-        return false;
-    }
-    return 'post'; //false; // should this be false for kadence? 'post';
+    return 'post';
 }
 
 class mwpost
