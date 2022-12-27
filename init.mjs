@@ -75,6 +75,7 @@ function mw_add_category_if_missing( content ) {
         content.indexOf('{{#data-portlets.data-category-normal.array-items}}') === -1 &&
         content.indexOf('{{>CategoryPortlet}}') === -1 &&
         content.indexOf('{{>CategoryPlain}}' ) === -1 &&
+        content.indexOf('{{>CategoryLinks}}' ) === -1 &&
         locations.length > 0
     ) {
         const location = locations.pop();
