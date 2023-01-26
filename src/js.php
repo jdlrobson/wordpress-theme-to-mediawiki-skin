@@ -8,6 +8,11 @@ $skin_js_inline_top = '';
 global $skin_js_read_files;
 $skin_js_read_files = [];
 
+function wp_deregister_script( $handle ) {
+    global $skin_js;
+    $skin_js .= '/** Request to remove '.  $handle . ' but the converter doesn not support. */';
+}
+
 function mw_get_js() {
     global $skin_js_inline_top, $skin_js_inline_bottom, $skin_js;
     return $skin_js_inline_top . $skin_js . $skin_js_inline_bottom;
