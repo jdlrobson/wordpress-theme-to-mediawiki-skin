@@ -53,6 +53,10 @@ function the_excerpt() {
     return '<!--todo excerpt -->';
 }
 
+function the_post_thumbnail() {
+    return '<!--todo post-thumbnail -->';
+}
+
 function has_term( $t, $slug ) {
     switch ( $slug ) {
         case 'category':
@@ -387,7 +391,8 @@ function is_paged() {
 }
 
 function get_permalink() {
-    return '#t-permalink';
+    # canonical-url for > 1.39, #t-permalink for older skins
+    return '{{canonical-url}}#t-permalink';
 }
 
 function get_the_permalink() {
