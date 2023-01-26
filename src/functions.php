@@ -422,3 +422,36 @@ function wp_json_encode( $data, $options = 0, $depth = 512 ) {
  
     return json_encode( $data, $options, $depth );
 }
+
+function validate_file( $file, $allowed_files = array() ) {
+	if ( ! is_scalar( $file ) || '' === $file ) {
+		return 0;
+	}
+
+	// `../` on its own is not allowed:
+	if ( '../' === $file ) {
+		return 1;
+	}
+
+	// More than one occurrence of `../` is not allowed:
+	if ( preg_match_all( '#\.\./#', $file, $matches, PREG_SET_ORDER ) && ( count( $matches ) > 1 ) ) {
+		return 1;
+	}
+
+	// `../` which does not occur at the end of the path is not allowed:
+	if ( false !== strpos( $file, '../' ) && '../' !== mb_substr( $file, -3, 3 ) ) {
+		return 1;
+	}
+
+	// Files not in the allowed file list are not allowed:
+	if ( ! empty( $allowed_files ) && ! in_array( $file, $allowed_files, true ) ) {
+		return 3;
+	}
+
+	// Absolute Windows drive paths are not allowed:
+	if ( ':' === substr( $file, 1, 1 ) ) {
+		return 2;
+	}
+
+	return 0;
+}
