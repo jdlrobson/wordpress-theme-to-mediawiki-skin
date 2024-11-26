@@ -4,7 +4,7 @@ import { buildSkin } from 'mediawiki-skins-cli';
 import domino from 'domino';
 import unminifySource from 'unminify';
 import cssunminifier from 'cssunminifier';
-import packageJSON from './package.json';
+import packageJSON from './package.json' assert { type: "json" };
 
 // run nvm use if getting error here
 global.__dirname = import.meta.url.replace( '/index.js', '').replace(

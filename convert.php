@@ -107,6 +107,8 @@ function get_parent_theme_file_path( $path ) {
     return  get_theme_root() . $path;
 }
 
+function twentyfifteen_entry_meta() {}
+
 require_once(THEME_PATH . $THEME_NAME ."/functions.php");
 
 # Make it!

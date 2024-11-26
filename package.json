@@ -9,11 +9,11 @@
     "@babel/preset-env": "7.15.0",
     "cssunminifier": "0.0.2",
     "domino": "2.1.6",
-    "mediawiki-skins-cli": "^0.7.1",
+    "mediawiki-skins-cli": "1.43.0",
     "unminify": "2.0.0"
   },
   "scripts": {
-    "start": "babel-node init.mjs --experimental-json-modules"
+    "start": "node init.mjs --experimental-json-modules"
   },
   "author": "",
   "license": "GPL-2.0-or-later"

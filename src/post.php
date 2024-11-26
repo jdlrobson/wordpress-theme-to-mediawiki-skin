@@ -24,6 +24,14 @@ function edit_post_link() {
     echo '{{>EditBar}}';
 }
 
+function wp_attachment_is_image() {
+    return false;
+}
+
+function get_adjacent_post() {
+    return null;
+}
+
 function post_class( $class = 'post-19 post type-post status-publish format-standard hentry entry' ) {
     if ( is_array( $class ) ) {
         $class = implode( ' ', $class );
