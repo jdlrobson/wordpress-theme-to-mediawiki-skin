@@ -2,7 +2,6 @@
 global $wp_version;
 $wp_version = '6.0.0';
 
-function wp_style_add_data() {}
 function wp_script_add_data() {}
 
 function wp_get_script_polyfill() {}

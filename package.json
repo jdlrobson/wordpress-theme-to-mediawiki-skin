@@ -10,11 +10,17 @@
     "cssunminifier": "0.0.2",
     "domino": "2.1.6",
     "mediawiki-skins-cli": "1.43.0",
+    "postcss-cli": "^11.0.0",
+    "sort-css-media-queries": "^2.4.0",
     "unminify": "2.0.0"
   },
   "scripts": {
     "start": "node init.mjs --experimental-json-modules"
   },
   "author": "",
-  "license": "GPL-2.0-or-later"
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "postcss": "^8.4.49",
+    "postcss-sort-media-queries": "^5.2.0"
+  }
 }

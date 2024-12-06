@@ -5,6 +5,8 @@ import domino from 'domino';
 import unminifySource from 'unminify';
 import cssunminifier from 'cssunminifier';
 import packageJSON from './package.json' assert { type: "json" };
+import postcss from 'postcss';
+import sortMediaQueries from 'postcss-sort-media-queries';
 
 // run nvm use if getting error here
 global.__dirname = import.meta.url.replace( '/index.js', '').replace(
@@ -330,6 +332,26 @@ Last updated on ${new Date().toDateString()}.`,
                     exec(command);
                 });
             });
+            // post CSS
+            const cssPath = `${ folder  }/resources/common.css`;
+            if ( fs.existsSync( cssPath ) ) {
+                //postcss --use autoprefixer -o main.css css/*.css
+                const newCss = postcss( [
+                    sortMediaQueries({
+                      sort: 'mobile-first' // default
+                    })
+                ] ).process(
+                    fs.readFileSync( cssPath ).toString()
+                ).then( ( result ) => {
+                    console.log('Processing complete');
+                    if ( result.css ) {
+                        console.log('Write postcss');
+                        fs.writeFile( cssPath , result.css, () => true)
+                      }
+                } );
+            } else {
+                console.log( `Unable to locate ${ cssPath }` );
+            }
         });
         //exec( `open http://localhost:8888/w/index.php/Selenium_category_test?useskin=${skinName}`)
     }

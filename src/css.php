@@ -111,8 +111,20 @@ function mw_extract_assets( $src, $contents ) {
         }
     }
 }
+
+$enqueuedSkinStyles = [];
+
+function wp_style_add_data( $name, $type, $condition ) {
+    global $enqueuedSkinStyles;
+    // Skip any styles that are conditional e.g. IE8 or IE11.
+    if ( $type === 'conditional' && $condition ) {
+        $enqueuedSkinStyles[ $name ] = '';
+    }
+}
+
 function wp_enqueue_style( string $handle, string $src = '', $deps = [], string|bool|null $ver = false, string $media = 'all' ) {
-    global $skin_css, $skin_assets, $skin_js;
+    global $enqueuedSkinStyles, $skin_assets, $skin_js;
+    $skin_css = '';
     // Currently no way to set external dependencies.
     if ( substr( $src, 0, 2 ) === '//' ) {
         if ( strpos( $src, 'fonts.googleapis.com' ) !== false ) {
@@ -137,8 +149,8 @@ EOT;
         $skin_css .= $src ? mw_fixup( $contents, true ) : '';
     } else {
         $skin_css .= "/* File $src does not exist. */";
-        return;
     }
+    $enqueuedSkinStyles[ $handle ] = $skin_css;
 }
 
 function get_theme_mods() {
@@ -169,7 +181,7 @@ EOT;
 }
 
 function mw_make_css() {
-    global $skin_css, $skin_css_inline;
+    global $skin_css, $skin_css_inline, $enqueuedSkinStyles;
     $css = <<<EOT
 /* The following rules will not be needed in future */
 .mw-editsection {
@@ -216,7 +228,7 @@ h2#mw-toc-heading {
 }
 
 EOT;
-    return $skin_css . $css .
+    return implode( "\n", $enqueuedSkinStyles ) . $css .
         // inline styles come last as must override everything else
         $skin_css_inline;
 }
